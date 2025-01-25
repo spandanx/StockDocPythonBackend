@@ -1,0 +1,13 @@
+mysql:
+    host: 180.188.226.161
+    port: 3334
+    user: ngqbR2N4miKvHuXoQydmodlfYmjjOl1xLCvCJxwc+Y4=
+    password: /VIzexSn6/wHiguCOVUOTqFS+zcCwsNMygGU7xHY2YM=
+    database: stock_db
+
+origin:
+    frontend: http://localhost:3000
+
+stock:
+  chart:
+    baseurl: https://kite.zerodha.com/oms/instruments/historical/{stock_id}/{frequency}?user_id={user_id}&oi={oi}&from={from_date}&to={to_date}
