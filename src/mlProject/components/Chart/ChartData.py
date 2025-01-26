@@ -16,7 +16,7 @@ class ChartData:
                                  headers_[4]: row[4],
                                  headers_[5]: row[5]
                                  })
-        return result_array[:10]
+        return result_array
 
     def get_chart(self, stock_id, frequency, user_id, oi, from_date, to_date, auth_header):
         url = self.chart_base_url.format(stock_id=stock_id, frequency=frequency, user_id=user_id, oi=oi, from_date=from_date, to_date=to_date)

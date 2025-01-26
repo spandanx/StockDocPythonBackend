@@ -13,6 +13,7 @@ from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 from config.ExtractProperties import Property
 from src.mlProject.components.Chart.ChartData import ChartData
+from src.mlProject.utils.StockUtils import StockUtils
 
 origins = [
     "*"
@@ -20,7 +21,8 @@ origins = [
 
 properties = Property().get_property_data()
 
-chartData = ChartData(properties["stock"]["chart"]["baseurl"])
+chartData = ChartData(properties["stock"]["chart"]["baseurl"] + properties["stock"]["chart"]["charturl"])
+stockUtils = StockUtils(properties["stock"]["chart"])
 
 app = FastAPI()
 
@@ -34,7 +36,7 @@ app.add_middleware(
 )
 
 auth_header = {
-    "authorization": "enctoken uPrMPgbpwVwzZAL47gUJBr0sKwW6kNqD3NpFjWmm7gwH48WakKvGMp7dP4eo0lcsFxpNSvxBgJZ2IgiAw4iDtqlK61z5t+FMtoyz/gVH8foVxW2jBKOq0g=="
+    "authorization": "enctoken zCBguB+DBiEFKnSu4Pwa8kUVECYBdF9x2R6/zNeh8Ann/FNSqBK/A4zw1J/Vu9V6JKJ2/rWMXywk92JPMPpDyRzHRYmcepOAK0PuEDJD+xPpdcrhylM7Fg=="
 }
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
@@ -53,6 +55,23 @@ async def get_chart(stock_id: str, frequency: str, user_id: str, oi: str, from_d
         return chart_info#Response(content=chart_info, media_type="application/json")
     except Exception as e:
         print('Something went wrong while getting the chart')
+        print(e)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f'Error has occurred while getting the chart -  {e}'
+        )
+
+@app.get("/holdings/")
+async def get_holdings(request: Request):
+    print("called get_holdings()")
+    try:
+        stock_auth_header = {"Authorization": request.headers.get('stock_authorization')}
+        holdings = stockUtils.get_holdings(stock_auth_header)
+        print(holdings)
+        return holdings
+        # print(request.headers.get('stock_authorization'))
+    except Exception as e:
+        print('Something went wrong while getting the holdings')
         print(e)
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
