@@ -24,7 +24,7 @@ Backend - `FastAPI`, `OAuth2 Security`, `Apache Airflow`, `MLFlow`, `Docker`, `P
 
 ### Step 1. Clone the repositories
 #### Backend: https://github.com/spandanx/StockDocPythonBackend
-#### Frontend: 
+#### Frontend: https://github.com/spandanx/StockDocReactJs
 
 
 ### Step 2. Install required softwares
