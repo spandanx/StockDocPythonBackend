@@ -1,0 +1,24 @@
+pandas
+numpy
+seaborn
+matplotlib
+nltk
+scipy==1.10.1
+fastapi
+uvicorn
+pandas
+nltk
+scikit-learn
+numpy
+matplotlib
+keras
+tensorflow-gpu==2.10.0
+PyJWT
+passlib[bcrypt]
+pydantic-settings
+python-dotenv
+python-multipart
+mysql-connector-python
+pycryptodome
+paramiko
+-e .

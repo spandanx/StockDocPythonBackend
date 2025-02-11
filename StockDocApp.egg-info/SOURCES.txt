@@ -1,0 +1,5 @@
+setup.py
+StockDocApp.egg-info/PKG-INFO
+StockDocApp.egg-info/SOURCES.txt
+StockDocApp.egg-info/dependency_links.txt
+StockDocApp.egg-info/top_level.txt

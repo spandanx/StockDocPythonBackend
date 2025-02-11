@@ -13,3 +13,8 @@ stock:
     baseurl: https://kite.zerodha.com/oms/
     charturl: instruments/historical/{stock_id}/{frequency}?user_id={user_id}&oi={oi}&from={from_date}&to={to_date}
     holdingurl: portfolio/holdings
+
+sftp:
+  host: 180.188.226.161
+  username: JfD8SOIufphkd6sKNfVerH1KtI7KLf/15eEm5LUaAo0=
+  password: LzCubmyHxgn4gqJQpefB02PCiCBKtxEuYMsejarNXIw=
