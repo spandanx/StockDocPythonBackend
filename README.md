@@ -150,7 +150,7 @@ cd mlflow
 ##### Start MLFlow
 ```mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts --host 0.0.0.0 --port <port> --app-name basic-auth```
 
-##### Access from Python
+##### Sample code to access from Python
 ```import os
 os.environ['MLFLOW_TRACKING_USERNAME'] = '<username>'
 os.environ['MLFLOW_TRACKING_PASSWORD'] = '<password>'
