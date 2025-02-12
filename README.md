@@ -45,18 +45,25 @@ Backend - `FastAPI`, `OAuth2 Security`, `Apache Airflow`, `MLFlow`, `Docker`, `P
 ## Steps to run locally
 
 
-
 ### Step 1. Clone the repositories
+-------------------------
 #### Backend: https://github.com/spandanx/StockDocPythonBackend
 #### Frontend: https://github.com/spandanx/StockDocReactJs
 
 
 ### Step 2. Install required softwares
+-------------------------
 
 `Node.js`
 `Miniconda`
 
+#### Install required packages
+```
+python -m pip install -r requirements.txt
+```
+
 ### Step 3. Prepare backend
+-------------------------
 
 #### Create new environment
 <p>Open miniconda console. Run the below commands </p>
@@ -65,5 +72,44 @@ Backend - `FastAPI`, `OAuth2 Security`, `Apache Airflow`, `MLFlow`, `Docker`, `P
 conda create -n env-name python=3.10
 conda activate env-name
 ```
+#### Prepare Airflow - Custom Docker
+##### Download docker-compose.yaml
+-----------------------
+'https://airflow.apache.org/docs/apache-airflow/2.10.4/docker-compose.yaml'
 
+##### Add Dockerfile and add the below lines
+-----------------------
+```
+FROM apache/airflow:2.10.4-python3.10
+COPY requirements.txt /requirements.txt
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r /requirements.txt
+```
+##### Create requirements.txt file add the below dependecies
+```
+pandas==2.2.2
+numpy==1.26.4
+scikit-learn==1.5.0
+matplotlib==3.9.0
+keras==2.10.0
+tensorflow-estimator==2.10.0
+tensorflow-gpu==2.10.0
+requests==2.32.3
+mlflow==2.19.0
+paramiko==3.5.0
+```
+
+##### Run the below command
+```docker build . --tag extending_airflow_python_310:latest```
+
+##### Change the image name in docker-compose.yaml with 
+```extending_airflow_python_310:latest```
+
+
+
+### Step 4. Run the python application
+-------------------------
+```
+python -m uvicorn main:app --env-file path-to-env-file/custom_env_data.env
+```
 
