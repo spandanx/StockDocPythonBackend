@@ -72,10 +72,18 @@ python -m pip install -r requirements.txt
 conda create -n env-name python=3.10
 conda activate env-name
 ```
-#### Prepare Airflow - Custom Docker
-##### Download docker-compose.yaml
+### Step 4. Prepare Airflow - Custom Docker
 -----------------------
+##### Download docker-compose.yaml
 'https://airflow.apache.org/docs/apache-airflow/2.10.4/docker-compose.yaml'
+
+##### Run the below commands
+Update the below field values in the docker-compose.yaml file for custom username and password
+```
+_AIRFLOW_WWW_USER_USERNAME
+_AIRFLOW_WWW_USER_PASSWORD
+```
+
 
 ##### Add Dockerfile and add the below lines
 -----------------------
@@ -105,9 +113,55 @@ paramiko==3.5.0
 ##### Change the image name in docker-compose.yaml with 
 ```extending_airflow_python_310:latest```
 
+##### Run the below commands
+```
+mkdir ./dags ./logs ./plugins
+sudo chmod -R 777 dags
+echo -e "AIRFLOW_UID=$(id -u)\nAIRFLOW_GID=0" > .env
 
+export AIRFLOW_HOME=/home/gamma/airflow-docker-secure/dags
+echo "export AIRFLOW_HOME=/home/gamma/airflow-docker-secure/dags" >> ~/.bashrc
+source ~/.bashrc
+```
+##### Run the docker commands
+```
+docker compose up airflow-init
+docker compose up -d
+```
+### Step 5. Prepare MLFlow
+-----------------------
+##### Install MLFlow in python virtual environment
+```python -m pip install mlflow```
 
-### Step 4. Run the python application
+##### Modify the mlflow config file
+```sudo chmod -R 777 /home/<user>/<virtual-end>/lib/python3.10/site-packages/mlflow/server/auth/```
+###### Set the below details for custom credentials
+```
+admin_username
+admin_password
+```
+##### Get into python virtual environment
+```source pyvenv/bin/activate```
+##### Create a new folder /mlflow
+```
+mkdir mlflow
+cd mlflow
+```
+##### Start MLFlow
+```mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./artifacts --host 0.0.0.0 --port <port> --app-name basic-auth```
+
+##### Access from Python
+```import os
+os.environ['MLFLOW_TRACKING_USERNAME'] = '<username>'
+os.environ['MLFLOW_TRACKING_PASSWORD'] = '<password>'
+
+mlflow.set_tracking_uri(uri="<host>")
+mlflow.set_experiment("<ProjectName>")
+
+with mlflow.start_run():
+   code ...
+```
+### Step 6. Run the python application
 -------------------------
 ```
 python -m uvicorn main:app --env-file path-to-env-file/custom_env_data.env
