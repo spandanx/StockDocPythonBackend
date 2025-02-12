@@ -27,7 +27,15 @@ This is a web application that can display and predict stock price predition usi
 <p>MLFlow Tracker</p>
 <img src="https://github.com/user-attachments/assets/6273685e-adb2-4612-9dde-ea7a6c3b09cd" width=50% height=50%>
 
-	
+
+## Instructions to use the application
+1. Register with the application with the referral code to be given by the admin (me), provide the stock userid (Kite-Zerodha) while registering.
+2. Login with the username and password
+3. Add the daily stock token from zerodha. (You can get this from kite web app, inspect any api (ex - holding, orders etc) and get the authentication token (Starts with enctoken <>))
+4. Click at the arrow mark (top right) of any stock to view the price chart.
+5. Click on Load Predictions button, select the prediction day if available and click on Show Prediction button
+6. View the prediction
+ 
 ## Technologies used
 
 Frontend - `React.js`
